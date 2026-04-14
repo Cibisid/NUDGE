@@ -66,7 +66,10 @@ def create_agent(request: TaskRequest):
     
     agent_data = json.loads(content)
     token = str(uuid.uuid4())[:8]
-    agent_sessions[token] = agent_data
+    agent_sessions[token] = {
+        **agent_data,
+        "used": False
+    }
 
     return {
         "link": f"http://localhost:8000/run/{token}",
@@ -77,7 +80,22 @@ def create_agent(request: TaskRequest):
 @app.get("/run/{token}", response_class=HTMLResponse)
 def run_agent(token: str):
     if token not in agent_sessions:
-        return HTMLResponse("<h1>Link expired or invalid</h1>")
+        return HTMLResponse("""
+        <html><body style='font-family:Arial;text-align:center;padding:50px'>
+        <h1>❌ Link expired or invalid</h1>
+        <p>This link does not exist or has expired.</p>
+        </body></html>
+        """)
+    
+    if agent_sessions[token]["used"]:
+        return HTMLResponse("""
+        <html><body style='font-family:Arial;text-align:center;padding:50px'>
+        <h1>⚠️ Already Used!</h1>
+        <p>This link has already been used and cannot be run again.</p>
+        </body></html>
+        """)
+    
+    agent_sessions[token]["used"] = True
     
     agent_data = agent_sessions[token]
     script = agent_data["script"]
