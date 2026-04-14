@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
 import uuid
@@ -13,6 +14,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Temporary in-memory store
@@ -88,7 +97,7 @@ def run_agent(token: str):
     <!DOCTYPE html>
     <html>
     <head>
-        <title>AgentLink</title>
+        <title>NUDGE</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             body {{ font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f5f5f5; }}
@@ -99,7 +108,7 @@ def run_agent(token: str):
         </style>
     </head>
     <body>
-        <h1>🤖 AgentLink</h1>
+        <h1>👆 NUDGE</h1>
         <h2>Task: {task}</h2>
         <div class="status">{status}</div>
         <div class="steps">
