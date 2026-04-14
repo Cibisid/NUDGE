@@ -1,16 +1,44 @@
-# React + Vite
+# 👆 NUDGE — AI-Powered Remote Automation Agent
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Describe a task in plain English → Get a secure link → Send it → It executes automatically on the target device. No app install needed.
 
-Currently, two official plugins are available:
+## 🎯 Problem It Solves
+Ever had to video call your parents just to help them do something simple on their PC? NUDGE fixes that. You describe the task, AI generates an automation agent, you send a link, and it runs automatically on their device.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Demo
+1. Type: "Open notepad and type Hello World"
+2. Click Generate Link
+3. Open the link on any Windows PC
+4. Watch it execute automatically 🤖
 
-## React Compiler
+## ⚙️ How It Works
+1. User describes a task in plain English
+2. LLM (Llama 3.3 70B via Groq) generates a Python automation script
+3. A unique secure token link is created
+4. Link opens on target device and executes the script automatically
+5. Task done — zero technical knowledge needed
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
+- **Backend:** Python, FastAPI, Groq API (Llama 3.3 70B)
+- **Frontend:** React, Vite
+- **Automation:** PyAutoGUI, Subprocess
+- **Security:** UUID token links with expiry
 
-## Expanding the ESLint configuration
+## 📦 Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Backend
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## 🔑 Environment Variables
+Create a `backend/.env` file:
